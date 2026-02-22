@@ -1,1 +1,1418 @@
-<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><title>DR. DAN</title><style>*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; } :root { --bg: #000; --zinc: #71717a; --zinc-dark: #3f3f46; --zinc-light: #a1a1aa; --blue: #3b82f6; --blue-bright: #60a5fa; --orange: #f97316; --orange-bright: #fb923c; --green: #22c55e; --red: #ef4444; } html, body { width: 100%; height: 100%; background: var(--bg); color: var(--zinc); font-family: sans-serif; overflow: hidden; } body { display: flex; flex-direction: column; height: 100dvh; } .screen { display: none; flex-direction: column; height: 100%; width: 100%; } .screen.active { display: flex; } #select-screen { align-items: center; justify-content: center; padding: 24px; } .logo { font-weight: 900; font-size: 60px; color: #fff; } </style></head><body><div id="select-screen" class="screen active"><div class="logo">DR. DAN</div><p style="color:white">FULL APP LOADED VIA GITHUB PAGES</p></div></body></html>
+<!DOCTYPE html>
+<html lang="es"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="DR. DAN">
+<meta name="theme-color" content="#000000">
+<title>DR. DAN</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;900&amp;family=Space+Mono:wght@400;700&amp;display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #000;
+    --zinc: #71717a;
+    --zinc-dark: #3f3f46;
+    --zinc-light: #a1a1aa;
+    --blue: #3b82f6;
+    --blue-bright: #60a5fa;
+    --orange: #f97316;
+    --orange-bright: #fb923c;
+    --green: #22c55e;
+    --red: #ef4444;
+    --safe-top: env(safe-area-inset-top, 0px);
+    --safe-bottom: env(safe-area-inset-bottom, 0px);
+    --safe-left: env(safe-area-inset-left, 0px);
+    --safe-right: env(safe-area-inset-right, 0px);
+  }
+
+  html, body {
+    width: 100%;
+    height: 100%;
+    background: var(--bg);
+    color: var(--zinc);
+    font-family: 'Barlow Condensed', sans-serif;
+    overflow: hidden;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    user-select: none;
+  }
+
+  body {
+    display: flex;
+    flex-direction: column;
+    height: 100dvh;
+    padding-top: var(--safe-top);
+    padding-bottom: var(--safe-bottom);
+    padding-left: var(--safe-left);
+    padding-right: var(--safe-right);
+  }
+
+  /* ── SCREENS ── */
+  .screen {
+    display: none;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+  }
+  .screen.active { display: flex; }
+
+  /* ── SELECT SCREEN ── */
+  #select-screen {
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    padding: 24px;
+  }
+
+  .logo {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: clamp(48px, 14vw, 80px);
+    letter-spacing: -2px;
+    color: #fff;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .logo-sub {
+    font-family: 'Space Mono', monospace;
+    font-size: clamp(10px, 3vw, 13px);
+    color: #fff;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-bottom: clamp(40px, 10dvh, 80px);
+  }
+
+  .select-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: #fff;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  .select-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+    max-width: 320px;
+  }
+
+  .select-btn {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 24px 28px;
+    border: 1px solid var(--zinc-dark);
+    border-radius: 4px;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    position: relative;
+    overflow: hidden;
+    text-align: left;
+  }
+
+  .select-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 0.15s;
+  }
+
+  .select-btn:active::before { opacity: 1; }
+
+  .select-btn.upper::before { background: rgba(59,130,246,0.1); }
+  .select-btn.legs::before { background: rgba(249,115,22,0.1); }
+
+  .select-btn.upper { border-color: rgba(59,130,246,0.3); }
+  .select-btn.legs { border-color: rgba(249,115,22,0.3); }
+
+  .btn-emoji {
+    font-size: 36px;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+
+  .btn-info { flex: 1; }
+
+  .btn-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 28px;
+    letter-spacing: 1px;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  .select-btn.upper .btn-title { color: #fff; }
+  .select-btn.legs .btn-title { color: #fff; }
+
+  .btn-rest {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: #fff;
+    margin-top: 4px;
+    letter-spacing: 1px;
+  }
+
+  /* ── TIMER SCREEN ── */
+  #timer-screen {
+    justify-content: space-between;
+  }
+
+  /* Header */
+  .timer-header {
+    padding: 20px 24px 0;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+
+  .header-left {}
+
+  .training-type {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: #ffffff !important;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+    font-weight: 700;
+  }
+
+  .mode-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: clamp(18px, 5vw, 24px);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    transition: color 0.3s;
+  }
+
+  .header-right {
+    text-align: right;
+  }
+
+  .header-right {
+    text-align: right;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    padding: 4px 0 4px 12px;
+  }
+
+  .series-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 2px;
+    color: #fff;
+    text-transform: uppercase;
+    margin-bottom: 2px;
+    font-weight: 700;
+  }
+
+  #series-max-badge {
+    color: var(--zinc-light);
+    font-weight: 700;
+  }
+
+  .series-dots {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    margin-top: 10px;
+  }
+
+  .series-dot {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: 3px solid var(--zinc-light);
+    transition: all 0.2s;
+  }
+
+  .series-dot.done {
+    background: var(--zinc-light);
+    border-color: var(--zinc-light);
+  }
+
+  .series-dot.current {
+    border-color: #fff;
+    background: rgba(255,255,255,0.2);
+    box-shadow: 0 0 12px rgba(255,255,255,0.7);
+  }
+
+  .series-count {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: clamp(52px, 14vw, 72px);
+    color: #fff;
+  }
+
+  /* Timer display */
+  .timer-center {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0 16px;
+  }
+
+  .time-display {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: clamp(100px, 28vw, 180px);
+    line-height: 0.9;
+    letter-spacing: -4px;
+    font-variant-numeric: tabular-nums;
+    transition: color 0.3s;
+    position: relative;
+  }
+
+  .time-dot {
+    font-size: 0.5em;
+    vertical-align: middle;
+    opacity: 0.4;
+  }
+
+  .status-msg {
+    font-family: 'Space Mono', monospace;
+    font-size: clamp(11px, 3.5vw, 14px);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-top: 16px;
+    min-height: 20px;
+    text-align: center;
+    transition: all 0.3s;
+  }
+
+  /* Progress bar */
+  .progress-bar-wrap {
+    width: 80%;
+    max-width: 280px;
+    height: 2px;
+    background: var(--zinc-dark);
+    border-radius: 2px;
+    margin-top: 20px;
+    overflow: hidden;
+  }
+
+  .progress-bar-fill {
+    height: 100%;
+    border-radius: 2px;
+    transition: width 1s linear, background-color 0.3s;
+    width: 0%;
+  }
+
+  /* Last series time */
+  .last-series {
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    letter-spacing: 2px;
+    color: #ffffff !important;
+    margin-top: 14px;
+    min-height: 18px;
+    text-align: center;
+    font-weight: 700;
+  }
+
+  /* Controls */
+  .timer-controls {
+    padding: 0 24px 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .main-btn {
+    width: 88px;
+    height: 88px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s ease;
+    position: relative;
+  }
+
+  .main-btn:active { transform: scale(0.93); }
+
+  .btn-inner {
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    transition: background 0.3s;
+  }
+
+  .main-btn.exercise { background: rgba(59,130,246,0.15); box-shadow: 0 0 0 1px rgba(59,130,246,0.3), 0 0 30px rgba(59,130,246,0.1); }
+  .main-btn.exercise .btn-inner { background: var(--blue-bright); border-radius: 50%; width: 28px; height: 28px; }
+  .main-btn.exercise.playing { background: rgba(59,130,246,0.2); }
+  .main-btn.exercise.playing .btn-inner { border-radius: 6px; }
+
+  .main-btn.rest { background: rgba(249,115,22,0.15); box-shadow: 0 0 0 1px rgba(249,115,22,0.3), 0 0 30px rgba(249,115,22,0.1); }
+  .main-btn.rest .btn-inner { background: var(--orange-bright); border-radius: 50%; width: 28px; height: 28px; }
+  .main-btn.rest.playing { background: rgba(249,115,22,0.2); }
+  .main-btn.rest.playing .btn-inner { border-radius: 6px; }
+
+  .control-row {
+    display: flex;
+    gap: 32px;
+    align-items: center;
+  }
+
+  .secondary-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 8px;
+  }
+
+  .secondary-btn-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    transition: all 0.15s;
+  }
+
+  .secondary-btn:active .secondary-btn-icon {
+    background: rgba(255,255,255,0.08);
+    transform: scale(0.92);
+  }
+
+  .secondary-btn-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--zinc-light);
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+
+  /* Animations */
+  @keyframes flash {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.2; }
+  }
+
+  @keyframes pulse-glow-blue {
+    0%, 100% { text-shadow: 0 0 20px rgba(34,197,94,0.3); }
+    50% { text-shadow: 0 0 60px rgba(34,197,94,0.8), 0 0 100px rgba(34,197,94,0.3); }
+  }
+
+  @keyframes pulse-glow-red {
+    0%, 100% { text-shadow: 0 0 20px rgba(239,68,68,0.3); }
+    50% { text-shadow: 0 0 60px rgba(239,68,68,0.8), 0 0 100px rgba(239,68,68,0.3); }
+  }
+
+  .flashing-green {
+    animation: flash 0.8s ease-in-out infinite, pulse-glow-blue 0.8s ease-in-out infinite;
+    color: var(--green) !important;
+  }
+
+  .flashing-red {
+    animation: flash 0.6s ease-in-out infinite, pulse-glow-red 0.6s ease-in-out infinite;
+    color: var(--red) !important;
+  }
+
+  @keyframes slideUp {
+    from { transform: translateY(8px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+
+  .msg-appear { animation: slideUp 0.25s ease forwards; }
+
+  /* Screen transition */
+  @keyframes screenIn {
+    from { opacity: 0; transform: scale(0.97); }
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  .screen.active { animation: screenIn 0.3s ease forwards; }
+
+  /* Rest goal marker */
+  .goal-marker {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: #fff;
+    text-transform: uppercase;
+  }
+
+  /* ── PARKING ── */
+  .parking-section {
+    margin-top: 28px;
+    width: 100%;
+    max-width: 320px;
+    border-top: 1px solid var(--zinc-dark);
+    padding-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .parking-toggle-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    gap: 12px;
+  }
+
+  .parking-toggle-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: #fff;
+    text-transform: uppercase;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .parking-emoji { font-size: 18px; }
+
+  .toggle-switch {
+    position: relative;
+    width: 48px;
+    height: 28px;
+    flex-shrink: 0;
+  }
+  .toggle-switch input { display: none; }
+  .toggle-track {
+    position: absolute;
+    inset: 0;
+    border-radius: 14px;
+    background: var(--zinc-dark);
+    transition: background 0.25s;
+    cursor: pointer;
+  }
+  .toggle-track::after {
+    content: '';
+    position: absolute;
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    background: #fff;
+    top: 3px; left: 3px;
+    transition: transform 0.25s;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.4);
+  }
+  .toggle-switch input:checked + .toggle-track { background: var(--green); }
+  .toggle-switch input:checked + .toggle-track::after { transform: translateX(20px); }
+
+  .parking-inputs {
+    display: none;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+  }
+  .parking-inputs.visible { display: flex; }
+
+  .parking-input-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  .parking-input-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1px;
+    color: #fff;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .parking-time-input {
+    background: #111;
+    border: 1px solid var(--zinc-dark);
+    border-radius: 8px;
+    color: #fff;
+    font-family: 'Space Mono', monospace;
+    font-size: 18px;
+    padding: 8px 12px;
+    width: 160px;
+    text-align: center;
+    -webkit-appearance: none;
+  }
+  .parking-time-input:focus { outline: none; border-color: var(--zinc); }
+
+  .parking-hours-btn {
+    background: #111;
+    border: 1px solid var(--zinc-dark);
+    border-radius: 8px;
+    color: #fff;
+    font-family: 'Space Mono', monospace;
+    font-size: 14px;
+    padding: 6px 14px;
+    cursor: pointer;
+    transition: border-color 0.2s;
+  }
+  .parking-hours-btn.selected { border-color: var(--green); color: var(--green); }
+  .parking-hours-group { display: flex; gap: 6px; }
+
+  .parking-alert {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    z-index: 100;
+    align-items: center;
+    justify-content: center;
+    padding: 32px;
+  }
+  .parking-alert.visible { display: flex; }
+
+  .parking-alert-box {
+    background: #111;
+    border: 1px solid var(--orange);
+    border-radius: 20px;
+    padding: 32px 24px;
+    width: 100%;
+    max-width: 320px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    box-shadow: 0 0 40px rgba(249,115,22,0.3);
+    animation: screenIn 0.3s ease;
+  }
+
+  .parking-alert-emoji { font-size: 48px; line-height: 1; }
+
+  .parking-alert-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 28px;
+    color: var(--orange-bright);
+    text-align: center;
+    letter-spacing: 1px;
+  }
+
+  .parking-alert-sub {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 1px;
+    color: var(--zinc-light);
+    text-align: center;
+  }
+
+  .parking-alert-actions { display: flex; gap: 12px; width: 100%; margin-top: 4px; }
+
+  .parking-btn-extend {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--orange);
+    border: none;
+    border-radius: 12px;
+    color: #000;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 18px;
+    letter-spacing: 1px;
+    padding: 14px;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  .parking-btn-extend:active { opacity: 0.7; }
+
+  .parking-extendido-btn {
+    display: none;
+    margin-top: 6px;
+    background: rgba(249,115,22,0.15);
+    border: 2px solid rgba(249,115,22,0.5);
+    border-radius: 10px;
+    color: var(--orange-bright);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 18px;
+    letter-spacing: 1px;
+    padding: 4px 12px;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  .parking-extendido-btn.visible { display: block; }
+  .parking-extendido-btn:active { opacity: 0.6; }
+
+  .parking-btn-dismiss {
+    flex: 1;
+    background: transparent;
+    border: 1px solid var(--zinc-dark);
+    border-radius: 12px;
+    color: var(--zinc-light);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    letter-spacing: 1px;
+    padding: 14px;
+    cursor: pointer;
+  }
+
+  .parking-badge {
+    display: none;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 22px;
+    letter-spacing: 1px;
+    color: var(--orange-bright);
+    text-transform: uppercase;
+    background: rgba(249,115,22,0.15);
+    border: 2px solid rgba(249,115,22,0.5);
+    border-radius: 10px;
+    padding: 4px 12px;
+    margin-top: 6px;
+    text-shadow: 0 0 12px rgba(249,115,22,0.5);
+  }
+  .parking-badge.visible { display: block; }
+</style>
+<style id="antigravity-scroll-lock-style">
+  html:root body.antigravity-scroll-lock {
+    overflow: hidden !important;
+  }
+</style><style>
+  body::-webkit-scrollbar {
+    display: none;
+  }
+  html::-webkit-scrollbar {
+    display: none;
+  }
+</style></head>
+<body class="antigravity-scroll-lock">
+
+<!-- SELECT SCREEN -->
+<div id="select-screen" class="screen active">
+  <div class="logo">DR. DAN</div>
+  <div class="logo-sub">Training Timer</div>
+  <div class="select-label">Select muscle group</div>
+  <div class="select-buttons">
+    <button class="select-btn upper" id="btn-upper">
+      <div class="btn-emoji">💪</div>
+      <div class="btn-info">
+        <div class="btn-title">Upper Body</div>
+        <div class="btn-rest">Rest · 30 sec</div>
+      </div>
+    </button>
+    <button class="select-btn legs" id="btn-legs">
+      <div class="btn-emoji">🦵</div>
+      <div class="btn-info">
+        <div class="btn-title">Legs</div>
+        <div class="btn-rest">Rest · 60 sec</div>
+      </div>
+    </button>
+  </div>
+
+  <!-- PARKING SECTION -->
+  <div class="parking-section">
+    <div class="parking-toggle-row">
+      <div class="parking-toggle-label">
+        <span class="parking-emoji">🅿️</span> Paid parking
+      </div>
+      <label class="toggle-switch">
+        <input type="checkbox" id="parking-toggle">
+        <div class="toggle-track"></div>
+      </label>
+    </div>
+    <div class="parking-inputs" id="parking-inputs">
+      <div class="parking-input-row">
+        <span class="parking-input-label">Start time</span>
+        <input type="time" class="parking-time-input" id="parking-start-time">
+      </div>
+      <div class="parking-input-row">
+        <span class="parking-input-label">Hours paid</span>
+        <div class="parking-hours-group" id="parking-hours-group">
+          <button class="parking-hours-btn" data-hours="1">1h</button>
+          <button class="parking-hours-btn" data-hours="2">2h</button>
+          <button class="parking-hours-btn" data-hours="3">3h</button>
+          <button class="parking-hours-btn" data-hours="4">4h</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div><!-- /select-screen -->
+
+<!-- PARKING ALERT -->
+<div class="parking-alert" id="parking-alert">
+  <div class="parking-alert-box">
+    <div class="parking-alert-emoji">🅿️</div>
+    <div class="parking-alert-title">PARKING EXPIRING SOON</div>
+    <div class="parking-alert-sub" id="parking-alert-sub">~10 minutes remaining</div>
+    <div class="parking-alert-actions">
+      <button class="parking-btn-extend" id="parking-btn-extend">GOT IT</button>
+    </div>
+  </div>
+</div>
+<div id="timer-screen" class="screen">
+  <div class="timer-header">
+    <div class="header-left">
+      <div class="training-type" id="training-label">UPPER BODY</div>
+      <div class="mode-label" id="mode-label">EXERCISE</div>
+      <div class="parking-badge" id="parking-badge">🅿️ active</div>
+      <button class="parking-extendido-btn" id="parking-extendido-btn">✓ Extended</button>
+    </div>
+    <div class="header-right" id="series-max-toggle" title="Tap para cambiar">
+      <div class="series-label">Serie <span id="series-max-badge">/ 3</span></div>
+      <div class="series-count" id="series-count">1</div>
+      <div class="series-dots" id="series-dots"></div>
+    </div>
+  </div>
+
+  <div class="timer-center">
+    <div class="time-display" id="time-display">00</div>
+    <div class="status-msg" id="status-msg"></div>
+    <div class="progress-bar-wrap">
+      <div class="progress-bar-fill" id="progress-bar"></div>
+    </div>
+    <div class="last-series" id="last-series"></div>
+  </div>
+
+  <div class="timer-controls">
+    <button class="main-btn exercise" id="main-btn">
+      <div class="btn-inner" id="btn-inner"></div>
+    </button>
+    <div class="control-row">
+      <button class="secondary-btn" id="btn-reset">
+        <div class="secondary-btn-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#a1a1aa" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+            <path d="M3 3v5h5"></path>
+          </svg>
+        </div>
+        <div class="secondary-btn-label">Reset</div>
+      </button>
+      <button class="secondary-btn" id="btn-home">
+        <div class="secondary-btn-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#a1a1aa" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"></path>
+            <path d="M9 21V12h6v9"></path>
+          </svg>
+        </div>
+        <div class="secondary-btn-label">Home</div>
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── STATE ──
+let state = {
+  mode: 'exercise',        // 'exercise' | 'rest'
+  trainingType: 'upper',   // 'upper' | 'legs'
+  seconds: 0,
+  seriesCount: 1,
+  seriesMax: 3,            // 3 or 4
+  lastSeriesTime: null,
+  isRunning: false,
+  savedAt: null,           // Date.now() when saved
+};
+
+// Parking state (separate from workout state)
+let parking = {
+  active: false,
+  startTime: null,    // Date.now() when parking started
+  hours: null,        // paid hours
+  alertShown: false,  // so we only alert once
+};
+
+let intervalId = null;
+let parkingIntervalId = null;
+let audioCtx = null;
+
+// ── AUDIO ──
+function getAudioCtx() {
+  if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  return audioCtx;
+}
+
+function beep(frequency = 880, duration = 0.15, type = 'sine', gain = 0.4) {
+  try {
+    const ctx = getAudioCtx();
+    const osc = ctx.createOscillator();
+    const gainNode = ctx.createGain();
+    osc.connect(gainNode);
+    gainNode.connect(ctx.destination);
+    osc.type = type;
+    osc.frequency.setValueAtTime(frequency, ctx.currentTime);
+    gainNode.gain.setValueAtTime(gain, ctx.currentTime);
+    gainNode.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + duration);
+    osc.start(ctx.currentTime);
+    osc.stop(ctx.currentTime + duration);
+  } catch(e) {}
+}
+
+function beepGoal() {
+  beep(1046, 0.12, 'sine', 0.5);
+  setTimeout(() => beep(1318, 0.18, 'sine', 0.5), 150);
+  setTimeout(() => beep(1568, 0.3, 'sine', 0.5), 330);
+}
+
+function beepOvertime() {
+  beep(300, 0.2, 'sawtooth', 0.3);
+}
+
+function beepComplete() {
+  // Victory fanfare — 4 ascending notes
+  beep(784, 0.1, 'sine', 0.5);
+  setTimeout(() => beep(988, 0.1, 'sine', 0.5), 120);
+  setTimeout(() => beep(1175, 0.1, 'sine', 0.5), 240);
+  setTimeout(() => beep(1568, 0.35, 'sine', 0.6), 360);
+}
+
+// ── PERSISTENCE (BLACK BOX) ──
+function saveState() {
+  const s = { ...state, savedAt: Date.now() };
+  try { localStorage.setItem('drdan_state', JSON.stringify(s)); } catch(e) {}
+}
+
+function loadState() {
+  try {
+    const raw = localStorage.getItem('drdan_state');
+    if (!raw) return false;
+    const s = JSON.parse(raw);
+    if (!s || !s.savedAt) return false;
+
+    // Restore and account for elapsed time
+    const elapsed = Math.floor((Date.now() - s.savedAt) / 1000);
+
+    state.mode = s.mode || 'exercise';
+    state.trainingType = s.trainingType || 'upper';
+    state.seriesCount = s.seriesCount || 1;
+    state.seriesMax = s.seriesMax || 3;
+    state.lastSeriesTime = s.lastSeriesTime || null;
+
+    if (s.isRunning && elapsed > 0) {
+      state.seconds = (s.seconds || 0) + elapsed;
+      state.isRunning = true;
+    } else {
+      state.seconds = s.seconds || 0;
+      state.isRunning = s.isRunning || false;
+    }
+
+    return true;
+  } catch(e) {
+    return false;
+  }
+}
+
+function clearState() {
+  try { localStorage.removeItem('drdan_state'); } catch(e) {}
+}
+
+// ── TRAINING START ──
+function startTraining(type) {
+  state.trainingType = type;
+  state.mode = 'exercise';
+  state.seconds = 0;
+  state.seriesCount = 1;
+  state.seriesMax = 3;
+  state.lastSeriesTime = null;
+  state.isRunning = false;
+
+  showTimerScreen();
+  updateUI();
+}
+
+function showTimerScreen() {
+  document.getElementById('select-screen').classList.remove('active');
+  document.getElementById('timer-screen').classList.add('active');
+}
+
+function showSelectScreen() {
+  document.getElementById('timer-screen').classList.remove('active');
+  document.getElementById('select-screen').classList.add('active');
+}
+
+// ── TIMER CONTROL ──
+function toggleTimer() {
+  // Unlock audio on first interaction
+  try { getAudioCtx().resume(); } catch(e) {}
+
+  if (!state.isRunning) {
+    startTimer();
+  } else {
+    stopTimer();
+  }
+}
+
+function startTimer() {
+  state.isRunning = true;
+  updateUI();
+  intervalId = setInterval(tick, 1000);
+}
+
+function stopTimer() {
+  clearInterval(intervalId);
+  intervalId = null;
+
+  // Auto-transition
+  if (state.mode === 'exercise') {
+    state.lastSeriesTime = null; // clear old time before saving new one
+    state.lastSeriesTime = state.seconds;
+    state.mode = 'rest';
+  } else {
+    state.mode = 'exercise';
+    // Don't clear lastSeriesTime here — keep visible during next exercise
+    if (state.seriesCount >= state.seriesMax) {
+      // Completed all series — reset and celebrate
+      beepComplete();
+      state.seriesCount = 1;
+    } else {
+      state.seriesCount++;
+    }
+  }
+
+  state.seconds = 0;
+  state.isRunning = true;
+  updateUI();
+  intervalId = setInterval(tick, 1000);
+  saveState();
+}
+
+function resetCurrent() {
+  clearInterval(intervalId);
+  intervalId = null;
+  state.seconds = 0;
+  state.isRunning = false;
+  updateUI();
+  saveState();
+}
+
+function toggleSeriesMax() {
+  try { getAudioCtx().resume(); } catch(e) {}
+  state.seriesMax = state.seriesMax === 3 ? 4 : 3;
+  if (state.seriesCount > state.seriesMax) state.seriesCount = state.seriesMax;
+  beep(660, 0.08, 'sine', 0.3);
+  updateUI();
+  saveState();
+}
+
+function goHome() {
+  clearInterval(intervalId);
+  intervalId = null;
+  clearState();
+  state.isRunning = false;
+  showSelectScreen();
+}
+
+function tick() {
+  state.seconds++;
+  updateUI();
+  saveState();
+
+  const restGoal = state.trainingType === 'upper' ? 30 : 60;
+
+  if (state.mode === 'rest') {
+    if (state.seconds === restGoal) {
+      beepGoal();
+    } else if (state.seconds > restGoal && state.seconds % 5 === 0) {
+      beepOvertime();
+    }
+  }
+}
+
+// ── UI UPDATE ──
+function updateUI() {
+  const s = state.seconds;
+  const isExercise = state.mode === 'exercise';
+  const restGoal = state.trainingType === 'upper' ? 30 : 60;
+  const exerciseGoal = 30;
+
+  // Format time
+  const mins = Math.floor(s / 60);
+  const secs = s % 60;
+  let timeStr;
+  if (mins > 0) {
+    timeStr = `${String(mins).padStart(2,'0')}<span class="time-dot">:</span>${String(secs).padStart(2,'0')}`;
+  } else {
+    timeStr = String(secs).padStart(2,'0');
+  }
+
+  const timeEl = document.getElementById('time-display');
+  timeEl.innerHTML = timeStr;
+
+  // Colors and states
+  const mainBtn = document.getElementById('main-btn');
+  const btnInner = document.getElementById('btn-inner');
+  const modeLabel = document.getElementById('mode-label');
+  const statusMsg = document.getElementById('status-msg');
+  const progressBar = document.getElementById('progress-bar');
+
+  // Remove animation classes
+  timeEl.classList.remove('flashing-green', 'flashing-red');
+
+  if (isExercise) {
+    // Exercise mode
+    mainBtn.className = `main-btn exercise${state.isRunning ? ' playing' : ''}`;
+    modeLabel.style.color = 'var(--blue-bright)';
+    modeLabel.textContent = 'EXERCISE';
+
+    if (s < exerciseGoal) {
+      timeEl.style.color = 'var(--blue-bright)';
+      statusMsg.textContent = s > 0 ? `${exerciseGoal - s}s to minimum` : '';
+      statusMsg.style.color = '#fff';
+      progressBar.style.width = `${Math.min(100, (s/exerciseGoal)*100)}%`;
+      progressBar.style.background = 'var(--blue)';
+    } else {
+      timeEl.classList.add('flashing-green');
+      timeEl.style.color = '';
+      statusMsg.textContent = 'ME LA PELA';
+      statusMsg.style.color = 'var(--green)';
+      statusMsg.className = 'status-msg msg-appear';
+      progressBar.style.width = '100%';
+      progressBar.style.background = 'var(--green)';
+    }
+
+  } else {
+    // Rest mode
+    mainBtn.className = `main-btn rest${state.isRunning ? ' playing' : ''}`;
+    modeLabel.style.color = 'var(--orange-bright)';
+    modeLabel.textContent = 'REST';
+
+    const pct = Math.min(100, (s / restGoal) * 100);
+    progressBar.style.width = `${pct}%`;
+
+    if (s < restGoal) {
+      timeEl.style.color = 'var(--orange-bright)';
+      statusMsg.textContent = `Goal: ${restGoal}s`;
+      statusMsg.style.color = '#fff';
+      progressBar.style.background = 'var(--orange)';
+    } else if (s === restGoal) {
+      timeEl.style.color = 'var(--orange-bright)';
+      statusMsg.textContent = '✓ TIME COMPLETE';
+      statusMsg.style.color = 'var(--green)';
+      progressBar.style.background = 'var(--green)';
+    } else {
+      timeEl.classList.add('flashing-red');
+      timeEl.style.color = '';
+      statusMsg.textContent = `MOVE IT! ${s - restGoal}s OVER`;
+      statusMsg.style.color = 'var(--red)';
+      statusMsg.className = 'status-msg msg-appear';
+      progressBar.style.background = 'var(--red)';
+    }
+  }
+
+  // Button state (play/stop icon)
+  if (state.isRunning) {
+    // Square (stop)
+    btnInner.style.borderRadius = '4px';
+    btnInner.style.width = '26px';
+    btnInner.style.height = '26px';
+    btnInner.style.background = isExercise ? 'var(--blue-bright)' : 'var(--orange-bright)';
+  } else {
+    // Triangle (play)
+    btnInner.style.width = '0';
+    btnInner.style.height = '0';
+    btnInner.style.borderRadius = '0';
+    btnInner.style.background = 'transparent';
+    btnInner.style.borderTop = '14px solid transparent';
+    btnInner.style.borderBottom = '14px solid transparent';
+    btnInner.style.borderLeft = `22px solid ${isExercise ? 'var(--blue-bright)' : 'var(--orange-bright)'}`;
+    btnInner.style.marginLeft = '4px';
+  }
+
+  // Training label
+  document.getElementById('training-label').textContent =
+    state.trainingType === 'upper' ? 'UPPER BODY' : 'LEGS';
+
+  // Series count + max badge
+  document.getElementById('series-count').textContent = state.seriesCount;
+  document.getElementById('series-max-badge').textContent = `/ ${state.seriesMax}`;
+
+  // Series dots
+  const dotsEl = document.getElementById('series-dots');
+  dotsEl.innerHTML = '';
+  for (let i = 1; i <= state.seriesMax; i++) {
+    const dot = document.createElement('div');
+    dot.className = 'series-dot';
+    if (i < state.seriesCount) dot.classList.add('done');
+    else if (i === state.seriesCount) dot.classList.add('current');
+    dotsEl.appendChild(dot);
+  }
+
+  // Last series time — show until next series starts
+  const lastEl = document.getElementById('last-series');
+  if (state.lastSeriesTime !== null) {
+    lastEl.textContent = `Last set · ${state.lastSeriesTime}s`;
+  } else {
+    lastEl.textContent = '';
+  }
+}
+
+// Reset play icon styles before switching to square
+function resetBtnInnerStyles() {
+  const bi = document.getElementById('btn-inner');
+  bi.style.borderTop = '';
+  bi.style.borderBottom = '';
+  bi.style.borderLeft = '';
+  bi.style.marginLeft = '';
+}
+
+// ── PARKING LOGIC ──
+function saveParking() {
+  try { localStorage.setItem('drdan_parking', JSON.stringify(parking)); } catch(e) {}
+}
+
+function loadParking() {
+  try {
+    const raw = localStorage.getItem('drdan_parking');
+    if (!raw) return;
+    const p = JSON.parse(raw);
+    if (p && p.active) {
+      // If expired more than 30 min ago, clear it — it's stale
+      if (p.startTime && p.hours) {
+        const expiresAt = p.startTime + (p.hours * 60 * 60 * 1000);
+        const minutesLeft = Math.round((expiresAt - Date.now()) / 60000);
+        if (minutesLeft < -30) {
+          clearParking();
+          return;
+        }
+      }
+      parking = p;
+      // Restore toggle UI
+      document.getElementById('parking-toggle').checked = true;
+      document.getElementById('parking-inputs').classList.add('visible');
+      // Re-populate time input display (show original start time)
+      if (p.startTime) {
+        const d = new Date(p.startTime);
+        const hh = String(d.getHours()).padStart(2,'0');
+        const mm = String(d.getMinutes()).padStart(2,'0');
+        document.getElementById('parking-start-time').value = `${hh}:${mm}`;
+      }
+      // Re-select hours button
+      if (p.hours) {
+        document.querySelectorAll('.parking-hours-btn').forEach(btn => {
+          btn.classList.toggle('selected', parseInt(btn.dataset.hours) === p.hours);
+        });
+      }
+      updateParkingBadge();
+      startParkingWatch();
+    }
+  } catch(e) {}
+}
+
+function clearParking() {
+  parking = { active: false, startTime: null, hours: null, alertShown: false };
+  try { localStorage.removeItem('drdan_parking'); } catch(e) {}
+  stopParkingWatch();
+  updateParkingBadge();
+}
+
+function activateParking() {
+  const timeInput = document.getElementById('parking-start-time').value;
+  if (!timeInput || !parking.hours) return;
+
+  // Parse the time input into today's date
+  const [hh, mm] = timeInput.split(':').map(Number);
+  const now = new Date();
+  const start = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hh, mm, 0, 0);
+
+  parking.active = true;
+  parking.startTime = start.getTime();
+  parking.alertShown = false; // reset so alert can fire again with new time
+  saveParking();
+  updateParkingBadge();
+  startParkingWatch();
+}
+
+function deactivateParking() {
+  clearParking();
+  document.getElementById('parking-inputs').classList.remove('visible');
+  document.getElementById('parking-toggle').checked = false;
+}
+
+function updateParkingBadge() {
+  const badge = document.getElementById('parking-badge');
+  const extBtn = document.getElementById('parking-extendido-btn');
+  if (!badge) return;
+  if (parking.active && parking.startTime && parking.hours) {
+    const expiresAt = parking.startTime + (parking.hours * 60 * 60 * 1000);
+    const msLeft = expiresAt - Date.now();
+    const minutesLeft = Math.round(msLeft / 60000);
+    if (minutesLeft > 0) {
+      badge.textContent = `🅿️ ${minutesLeft} min`;
+      badge.style.color = '';
+      badge.style.borderColor = '';
+    } else if (minutesLeft >= -30) {
+      // Show vencido in the 30min window after expiry — keep extendido visible
+      badge.textContent = `🅿️ expired`;
+      badge.style.color = '#ef4444';
+      badge.style.borderColor = 'rgba(239,68,68,0.5)';
+      if (extBtn) extBtn.classList.add('visible');
+    } else {
+      // Way past — probably stale data, hide everything
+      badge.classList.remove('visible');
+      if (extBtn) extBtn.classList.remove('visible');
+      return;
+    }
+    badge.classList.add('visible');
+  } else {
+    badge.classList.remove('visible');
+    if (extBtn) extBtn.classList.remove('visible');
+  }
+}
+
+function startParkingWatch() {
+  stopParkingWatch();
+  parkingIntervalId = setInterval(() => {
+    checkParking();
+    updateParkingBadge();
+  }, 30000); // check every 30s
+  checkParking();
+  updateParkingBadge();
+}
+
+function stopParkingWatch() {
+  if (parkingIntervalId) { clearInterval(parkingIntervalId); parkingIntervalId = null; }
+}
+
+function checkParking() {
+  if (!parking.active || !parking.startTime || !parking.hours) return;
+  if (parking.alertShown) return;
+
+  const expiresAt = parking.startTime + (parking.hours * 60 * 60 * 1000);
+  const msLeft = expiresAt - Date.now();
+  const minutesLeft = Math.floor(msLeft / 60000);
+
+  if (minutesLeft <= 10 && minutesLeft >= -30) {
+    parking.alertShown = true;
+    saveParking();
+    showParkingAlert(minutesLeft);
+  }
+}
+
+function showParkingAlert(minutesLeft) {
+  const alert = document.getElementById('parking-alert');
+  const sub = document.getElementById('parking-alert-sub');
+
+  if (minutesLeft > 0) {
+    sub.textContent = `Expires in ${minutesLeft} minute${minutesLeft !== 1 ? 's' : ''}`;
+  } else if (minutesLeft === 0) {
+    sub.textContent = 'Expiring NOW';
+  } else {
+    sub.textContent = `Expired ${Math.abs(minutesLeft)} minute${Math.abs(minutesLeft) !== 1 ? 's' : ''} ago`;
+  }
+
+  alert.classList.add('visible');
+
+  // Beep to get attention
+  beep(800, 0.1, 'sine', 0.4);
+  setTimeout(() => beep(1000, 0.15, 'sine', 0.4), 150);
+  setTimeout(() => beep(800, 0.1, 'sine', 0.4), 400);
+  setTimeout(() => beep(1000, 0.2, 'sine', 0.4), 550);
+}
+
+function dismissParkingAlert() {
+  document.getElementById('parking-alert').classList.remove('visible');
+}
+
+function extendParking() {
+  dismissParkingAlert();
+  // Show the "Extendido" button in the timer screen so user can confirm when done
+  const btn = document.getElementById('parking-extendido-btn');
+  if (btn) btn.classList.add('visible');
+}
+
+function confirmExtendido() {
+  // Reset parking to 1 hour from now
+  parking.startTime = Date.now() - ((parking.hours - 1) * 60 * 60 * 1000);
+  // Actually simpler: just set a new expiry 1 hour from now
+  parking.startTime = Date.now();
+  parking.hours = 1;
+  saveParking();
+  updateParkingBadge();
+  // Hide the extendido button
+  const btn = document.getElementById('parking-extendido-btn');
+  if (btn) btn.classList.remove('visible');
+}
+
+// ── INIT ──
+(function init() {
+  // Wire up all event listeners (avoids inline onclick sandbox issues)
+  document.getElementById('btn-upper').addEventListener('click', () => startTraining('upper'));
+  document.getElementById('btn-legs').addEventListener('click', () => startTraining('legs'));
+  document.getElementById('main-btn').addEventListener('click', toggleTimer);
+  document.getElementById('btn-reset').addEventListener('click', resetCurrent);
+  document.getElementById('btn-home').addEventListener('click', goHome);
+  document.getElementById('series-max-toggle').addEventListener('click', toggleSeriesMax);
+
+  // Parking toggle
+  document.getElementById('parking-toggle').addEventListener('change', function() {
+    if (this.checked) {
+      document.getElementById('parking-inputs').classList.add('visible');
+      // Default start time to now
+      const now = new Date();
+      const hh = String(now.getHours()).padStart(2,'0');
+      const mm = String(now.getMinutes()).padStart(2,'0');
+      document.getElementById('parking-start-time').value = `${hh}:${mm}`;
+    } else {
+      deactivateParking();
+    }
+  });
+
+  // Hours buttons
+  document.querySelectorAll('.parking-hours-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.parking-hours-btn').forEach(b => b.classList.remove('selected'));
+      this.classList.add('selected');
+      parking.hours = parseInt(this.dataset.hours);
+      if (document.getElementById('parking-toggle').checked) {
+        activateParking();
+      }
+    });
+  });
+
+  // Start time change
+  document.getElementById('parking-start-time').addEventListener('change', function() {
+    if (document.getElementById('parking-toggle').checked && parking.hours) {
+      activateParking();
+    }
+  });
+
+  // Parking alert buttons
+  document.getElementById('parking-btn-extend').addEventListener('click', extendParking);
+  document.getElementById('parking-extendido-btn').addEventListener('click', confirmExtendido);
+
+  // Restore session from black box
+  const restored = loadState();
+  if (restored && (state.mode === 'exercise' || state.mode === 'rest') && state.seriesCount >= 1) {
+    showTimerScreen();
+    updateUI();
+    if (state.isRunning) {
+      intervalId = setInterval(tick, 1000);
+    }
+  } else {
+    showSelectScreen();
+  }
+
+  // Restore parking
+  loadParking();
+})();
+</script>
+
+
+<div id="preact-border-shadow-host" popover="manual" style="border: none; padding: 0px; margin: 0px; inset: 0px; position: fixed; width: 100vw; height: 100vh; background: transparent; pointer-events: none;"></div></body></html>
